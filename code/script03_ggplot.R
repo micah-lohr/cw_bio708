@@ -104,7 +104,7 @@ iris %>% ggplot(
 # Fun Plot 2 --------------------------------------------------------------
 #Goal: make a bubble plot 
 # Libraries for a bubbleplot- you need gapminder
-install.packages("gapminder")
+#install.packages("gapminder")
 library(gapminder)
 bubble_data <- gapminder %>% filter(year=="2007") %>% dplyr::select(-year)
 
