@@ -19,8 +19,8 @@ v_abc100
 # Select only the positive numbers (> 0) from `v_x`, calculate their mean, and assign it to `mu_x_plus`.
 set.seed(100)
 v_x <- rnorm(100)
-
-filter(v_x, num>0)
+mu_x_plus <- mean(v_x[v_x>0])
+print(mu_x_plus)
 # 4: Create a numeric matrix with the numbers 1 through 9 arranged in 3 rows × 3 columns.  
 # Assign it to `m_num`.
 m_num <- matrix(c(1,2,3,4,5,6,7,8,9), nrow=3, ncol=3)
@@ -57,9 +57,10 @@ df_mtcars <- as.tibble(mtcars)
 colnames(mtcars)
 # 9: Extract the row names of the `mtcars` dataset using `rownames()`.  
 # Assign the result to `v_make`.
+rownames(mtcars)
 v_make <- rownames(mtcars)
 # 10: Add `v_make` as a new column to `df_mtcars` and name the column `"make"`.
-df_mtcars<- mutate(df_mtcars, make=v_make)
+df_mtcars<- mutate(mtcars, make=v_make)
 # 11: Filter `df_mtcars` to include only rows where:  
 # - `mpg` is less than 20 AND  
 # - `disp` is greater than 200  
@@ -76,7 +77,7 @@ n_make <- filter(df_mtcars, mpg < 20 & disp > 200) %>%
 # Add it to `df_mtcars` as a new column named `f_cyl` using `mutate()` function.
 # Use ?factor() for the usage of factor() function.
 ?factor()
-df_mtcars<- mutate(df_mtcars, f_cyl=as.factor(df_mtcars$cyl))
+df_mtcars<- mutate(mtcars, f_cyl=as.factor(df_mtcars$cyl))
 # 15: Draw a box plot showing car weight (`wt`) for each number of cylinders (`f_cyl`).
 df_mtcars %>% ggplot(mapping = aes(x=f_cyl, y=wt)) +
   geom_boxplot() +
