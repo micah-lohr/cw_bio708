@@ -37,7 +37,7 @@ library(tidyverse)
 # Convert it to a tibble using `as_tibble()` and assign it to `df_mtcars`.  
 # Use `?as_tibble()` to read the documentation before doing so.
 ?as_tibble()
-df_mtcars <- as.tibble(mtcars)
+df_mtcars <- as_tibble(mtcars)
 # 8: `mtcars` has the following columns:
 #
 # mpg   - Miles per gallon  
@@ -111,5 +111,6 @@ df_fish <- left_join(x = df_l,
 
 # 20: Draw a scatter plot (point plot) of `length` vs. `weight` from `df_fish`,  
 # coloring the points by `species`
-df_fish %>% ggplot(mapping=aes(x="length", y="weight", color="species")) +
-  geom_point()
+df_fish %>% ggplot(mapping=aes(x=length, y=weight, color=species)) +
+  geom_point() +
+  theme_classic()
