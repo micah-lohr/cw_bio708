@@ -3,7 +3,7 @@ pacman::p_load(tidyverse,
                patchwork,
                ggplot2)
 
-# PDF Lab -----------------------------------------------------------------
+# Normal distribution -----------------------------------------------------------------
 #The function rnorm() produces a random variable that follows a Normal distribution with a specified mean and SD. 
 # (1) Generate a variable with 50 observations.
 # (2) Create a figure similar to Figure 9.3
@@ -57,28 +57,41 @@ df_x %>%
             linetype="dotted")
 
 
-# PMF Lab -----------------------------------------------------------------
+# Poisson distribution -----------------------------------------------------------------
 # The function rpois() produces a random variable that follows a Poisson distribution with a specified mean. 
 # (1) Generate a variable with 1000 observations.
 # (2) Create a figure similar to Figure 9.7
 
-x2 <- rpois(1000, 21.876)
+# generate poisson-dist numbers
+z <- rpois(n=1000, lambda=10)
 
-# calculate probability mass
-lambda_hat <- mean(x2)
-pm <- dpois(x2, lambda = lambda_hat)
+# sample mean
+lambda <- mean(z)
 
-df_prob_pmf <- tibble(x = x2, y = pm) %>% 
-  mutate(freq = y * 1000)
+#bins 
+zbin <-seq(min(z), max(z), by=1)
 
-tibble(y=pm, x=x2) %>% 
-  ggplot(aes(x = x2)) +
-  geom_histogram(binwidth = 0.5, 
-                 center = 0) +
-  geom_line(data = df_prob_pmf,
-            aes(x = x2,
-                y = freq),
-            linetype = "dashed") +
-  geom_point(data = df_prob_pmf,
-             aes(x = x2,
-                 y = freq))
+#probability
+pm <- dpois(x=zbin, lambda = lambda)
+
+# prepare dataframes
+df_z <- tibble(z=z)
+
+df_prob_z <- tibble(pm = pm, zbin = zbin) %>% 
+  mutate(freq = pm * nrow(df_z))
+
+df_z %>% 
+  ggplot(aes(x=z)) +
+  geom_histogram(
+    binwidth=0.5, 
+    center = 1) +
+  geom_point(
+    data=df_prob_z,
+    aes(x=zbin,
+        y=freq),
+    color="hotpink"
+  ) +
+  geom_line(
+    data=df_prob_z,
+    aes(x=zbin, y=freq), color="hotpink"
+  )
